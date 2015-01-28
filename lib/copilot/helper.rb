@@ -7,12 +7,12 @@ module Copilot
       "<div #{contenteditable} data-slug='#{full_slug(slug)}'>#{text}</div>".html_safe
     end
 
-    def copilot_engage_path
+    def copilot_path
        request.path.include?('editable') ? request.path : "editable#{request.path}"
     end
 
     def link_to_copilot(name='Edit', html_options={})
-      link_to name, copilot_engage_path, html_options
+      link_to name, copilot_path, html_options
     end
 
     private
