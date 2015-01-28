@@ -13,4 +13,6 @@ to your Gemfile
 == Slugs
 By default, slugs are prefixed using the controller and action handling the request so "slug.foo" becomes "controller_name.action_name.slug.foo".  You can override this by prepending a "." to the provided slug so ".slug.foo" will become "slug.foo".  Beware, if your slugs are not globally unique, some content may be overwritten.
 
-== Configuration (TBD)
+== Configuration (not implemented)
+
+== Backend (not implemented)
