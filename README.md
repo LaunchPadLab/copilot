@@ -8,11 +8,11 @@ to your Gemfile
 3. Add `//= require jquery` and `//= require copilot/copilot` to your application.js
 4. Add `*= require copilot/copilot` to your application.css
 5. Add some editable text to your erb files with
-```
+```erb
 <%= copilot_text 'slug', 'Editable Text' %>
 ```
 or
-```
+```erb
 <%= copilot_text 'slug' do %>
   Editable Text
 <% end %>
