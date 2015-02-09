@@ -17,4 +17,5 @@ By default, slugs are prefixed using the controller and action handling the requ
 
 == Configuration (not implemented)
 
-== Backend (not implemented)
+== Backend
+Copilot adds one table to your database named copilot_content that contains all of the content under the control of copilot.
