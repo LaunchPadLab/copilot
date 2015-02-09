@@ -1,3 +1,4 @@
+require 'copilot/engine'
 require 'copilot/helper'
 require 'copilot/router'
 

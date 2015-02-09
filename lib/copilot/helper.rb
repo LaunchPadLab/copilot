@@ -1,22 +1,26 @@
 module Copilot
   module Helper
-    def copilot_text(slug, content=nil, &block)
-      foo = nil#ContentStore[slug]
-      text = foo || content || capture(&block)
+    def copilot_text(slug, content=nil, elem='div', &block)
+      text = Content.fetch(full_slug(slug), content || capture(&block))
       contenteditable = params[:copilot_engage] ? 'contenteditable' : ''
-      "<div #{contenteditable} data-slug='#{full_slug(slug)}'>#{text}</div>".html_safe
+      "<#{elem} #{contenteditable} data-copilot-slug='#{full_slug(slug)}' data-copilot-value='#{text}' class='copilot-editable'>#{text}</#{elem}>".html_safe
     end
 
-    def copilot_path
-       request.path.include?('editable') ? request.path : "editable#{request.path}"
+    def copilot_edit_path
+     "editable#{request.path}"
     end
 
-    def link_to_copilot(name='Edit', html_options={})
-      link_to name, copilot_path, html_options
+    def link_to_copilot(edit_name='Edit', back_name='Back', html_options={})
+      if params[:copilot_engage]
+        link_to back_name, :back, html_options.merge(class: 'copilot-back-link')
+      else
+        link_to edit_name, copilot_edit_path, html_options.merge(class: 'copilot-edit-link')
+      end
     end
 
     private
       def full_slug(slug)
+        p request.path.to_s
         unless slug.starts_with? "."
           "#{params[:controller]}.#{params[:action]}.#{slug}"
         else
