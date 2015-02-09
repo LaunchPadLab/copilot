@@ -7,7 +7,7 @@ module Copilot
     end
 
     def copilot_edit_path
-       "editable#{request.path}"
+     "editable#{request.path}"
     end
 
     def link_to_copilot(edit_name='Edit', back_name='Back', html_options={})
@@ -20,6 +20,7 @@ module Copilot
 
     private
       def full_slug(slug)
+        p request.path.to_s
         unless slug.starts_with? "."
           "#{params[:controller]}.#{params[:action]}.#{slug}"
         else
