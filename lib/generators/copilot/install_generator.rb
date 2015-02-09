@@ -8,6 +8,9 @@ module Copilot
 
       def install
         run 'bundle install'
+        route "mount Copilot::Engine => '/copilot'"
+        rake 'copilot:install:migrations'
+        rake 'db:migrate'
       end
 
       def add_routes
@@ -18,15 +21,6 @@ end
         RUBY
         end
       end
-
-      def add_styles
-        template "styles.css", "app/assets/stylesheets/copilot/styles.css"
-        inject_into_file 'app/assets/stylesheets/application.css', before: " */" do <<-'RUBY'
-           *= require copilot/styles
-        RUBY
-        end
-      end
-
     end
   end
 end

@@ -15,7 +15,6 @@ module Copilot
 
       Rails.application.routes.draw do
         routes.each { |f| get f[0], to: f[1], defaults: {copilot_engage: true} }
-        put '/editable', to: 'editable#update', as: :copilot_update
       end
     end
   end
