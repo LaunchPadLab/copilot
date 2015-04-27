@@ -12,4 +12,4 @@
 //
 //= require_tree .
 //= require jquery
-//= require copilot/copilot
+//= require copilot/application

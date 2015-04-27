@@ -1,5 +1,6 @@
 module Copilot
   module Helper
+
     def copilot_text(slug, content=nil, elem='div', &block)
       text = Content.fetch(full_slug(slug), content || capture(&block))
       contenteditable = params[:copilot_engage] ? 'contenteditable' : ''
@@ -18,7 +19,15 @@ module Copilot
       end
     end
 
+    def cms_edit_panel
+      signed_in? ? "Hello" : "Nope"
+    end
+
     private
+      def signed_in?
+        session[:user_id].present?
+      end
+
       def full_slug(slug)
         p request.path.to_s
         unless slug.starts_with? "."
