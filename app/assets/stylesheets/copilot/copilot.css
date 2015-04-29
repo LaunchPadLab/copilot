@@ -1,3 +1,4 @@
-[contenteditable] {
-  border: 2px solid lightblue;
+[content-editable] {
+  cursor: pointer;
+  border: 1px solid lightblue;
 }
