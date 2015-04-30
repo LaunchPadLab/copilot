@@ -1,19 +1,4 @@
 $(function() {
-  // $(".copilot-editable").blur(function() {
-  //   var t = $(this);
-  //   var slug = t.data().copilotSlug;
-  //   var origValue = t.data().copilotValue;
-  //   var curValue = t.text();
-
-  //   if (origValue != curValue) {
-  //     $.ajax({
-  //       url: '/copilot/content',
-  //       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-  //       type: 'PATCH',
-  //       data: {slug: slug, value: curValue}
-  //     });
-  //   }
-  // });
 
   $('[content-editable]').raptor({
     plugins:{
@@ -44,7 +29,19 @@ $(function() {
       // listOrdered
       // listUnordered
       logo: false,
-      // save
+      save: {
+        plugin: 'saveRest'
+      },
+      saveRest: {
+        url: '/copilot/content',
+        data: function(html) {
+          return {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+            slug: this.raptor.getElement().data('copilotSlug'),
+            value: html
+          };
+        }
+      },
       // snippetMenu
       specialCharacters: false,
       statistics: false,
@@ -67,7 +64,7 @@ $(function() {
       textUnderline: false,
       // viewSource
       dock:{
-        docked:true
+        dockToElement: true
       }
     }
   });

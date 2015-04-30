@@ -1,6 +1,10 @@
 module Copilot
   module Helper
 
+    def app_name
+      Copilot.configuration.app_name
+    end
+
     def copilot_text(slug, content=nil, elem='div', &block)
       text = Content.fetch(full_slug(slug), content || capture(&block))
       contenteditable = signed_in? ? 'content-editable' : ''
@@ -19,8 +23,17 @@ module Copilot
       end
     end
 
-    def cms_edit_panel
-      signed_in? ? "Hello" : "Nope"
+    def copilot_edit_panel
+      if signed_in?
+        %Q(
+          <header class="control-panel">
+            <p>
+              <span class="left">#{app_name} | CMS</span>
+              <span>Logged in as Admin | #{link_to('Log Out', '/copilot/log_out')}</span>
+            </p>
+          </header>
+        ).html_safe
+      end
     end
 
     private
