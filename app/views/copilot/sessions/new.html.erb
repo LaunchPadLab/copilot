@@ -3,7 +3,7 @@
     <legend>Please enter your CMS admin credentials below</legend>
     <p>
       <%= label_tag :email %>
-      <%= email_field_tag :email, nil, placeholder: 'admin@example.com' %>
+      <%= email_field_tag :email, params[:email], placeholder: 'admin@example.com' %>
     </p>
     <p>
       <%= label_tag :password %>

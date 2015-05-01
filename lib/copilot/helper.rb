@@ -29,7 +29,7 @@ module Copilot
           <header class="control-panel">
             <p>
               <span class="left">#{app_name} | CMS</span>
-              <span>Logged in as Admin | #{link_to('Log Out', '/copilot/log_out')}</span>
+              <span>Logged in as Admin | #{link_to('Log Out', '/cms/log_out')}</span>
             </p>
           </header>
         ).html_safe

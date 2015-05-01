@@ -4,8 +4,13 @@ module Copilot
     end
 
     def create
-      session[:user_id] = 100
-      redirect_to '/'
+      user = User.find_by_email(params[:email])
+      if user && user.authenticate(params[:password])
+        session[:user_id] = user.id
+        redirect_to '/'
+      else
+        render :new
+      end
     end
 
     def destroy
