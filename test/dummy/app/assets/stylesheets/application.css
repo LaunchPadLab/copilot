@@ -12,5 +12,5 @@
  *
  *= require_tree .
  *= require_self
- *= require copilot/copilot
+ *= require copilot/application
  */

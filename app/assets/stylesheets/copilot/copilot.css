@@ -1,3 +1,21 @@
-[contenteditable] {
-  border: 2px solid lightblue;
+[content-editable] {
+  cursor: pointer;
+  border: 1px solid lightblue;
+}
+
+.control-panel {
+  background: black;
+  color: white;
+  margin: -8px;
+  padding: 5px;
+  width: 100%;
+}
+
+.control-panel p {
+  margin: 0px;
+  text-align: right;
+}
+
+.left {
+  float: left;
 }
