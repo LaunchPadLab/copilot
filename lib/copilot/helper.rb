@@ -5,7 +5,7 @@ module Copilot
       Copilot.configuration.app_name
     end
 
-    def copilot_text(slug, content=nil, elem='div', &block)
+    def copilot_text(slug, elem='div', content=nil, &block)
       text = Content.fetch(full_slug(slug), content || capture(&block))
       contenteditable = signed_in? ? 'content-editable' : ''
       "<#{elem} #{contenteditable} data-copilot-slug='#{full_slug(slug)}' data-copilot-value='#{text}' class='copilot-editable'>#{text}</#{elem}>".html_safe

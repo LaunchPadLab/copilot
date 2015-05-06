@@ -11,9 +11,12 @@ $(function() {
       clearFormatting: false,
       clickButtonToEdit: false,
       colorMenuBasic: false,
-      dockToElement: false,
-      dockToScreen: false,
-      // embed
+      dock: {
+        dockToElement: true,
+        docked: true
+        // dockToScreen: false,
+      },
+      embed: false,
       floatLeft: false,
       floatNone: false,
       floatRight: false,
@@ -22,12 +25,12 @@ $(function() {
       // historyRedo
       // historyUndo
       hrCreate: false,
-      // insertFile
+      insertFile: false,
       languageMenu: false,
-      // linkCreate
-      // linkRemove
-      // listOrdered
-      // listUnordered
+      linkCreate: false,
+      linkRemove: false,
+      listOrdered: false,
+      listUnordered: false,
       logo: false,
       save: {
         plugin: 'saveRest'
@@ -42,7 +45,7 @@ $(function() {
           };
         }
       },
-      // snippetMenu
+      snippetMenu: false,
       specialCharacters: false,
       statistics: false,
       tableCreate: false,
@@ -62,10 +65,7 @@ $(function() {
       textSub: false,
       textSuper: false,
       textUnderline: false,
-      // viewSource
-      dock:{
-        dockToElement: true
-      }
+      viewSource: false
     }
   });
 
