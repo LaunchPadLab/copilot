@@ -1,5 +1,7 @@
 $(function() {
 
+  var $controlPanel = $('.control-panel');
+
   $('[content-editable]').raptor({
     plugins:{
       alignCenter: false,
@@ -36,10 +38,10 @@ $(function() {
         plugin: 'saveRest'
       },
       saveRest: {
-        url: '/copilot/content',
+        url: '/cms/content',
         data: function(html) {
           return {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+            'authenticity_token': $('meta[name="csrf-token"]').attr('content'),
             slug: this.raptor.getElement().data('copilotSlug'),
             value: html
           };
@@ -73,6 +75,19 @@ $(function() {
     $(el).on('click', function(){
       Raptor.getInstances()[i].enableEditing();
     });
+  });
+
+  $('.toggle-control-panel').on('click', function(e){
+    e.preventDefault();
+    var expanded = $(this).data('expanded');
+    if (expanded){
+      $(this).text('+');
+      $controlPanel.hide();
+    } else {
+      $(this).text('-');
+      $controlPanel.show();
+    }
+    $(this).data('expanded', !expanded);
   });
 
 });
