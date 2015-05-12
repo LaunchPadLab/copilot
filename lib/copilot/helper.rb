@@ -5,10 +5,12 @@ module Copilot
       Copilot.configuration.app_name
     end
 
-    def copilot_text(slug, elem='div', content=nil, &block)
+    def copilot_text(slug, options = {}, content = nil, &block)
       text = PageContent.new(contents: @contents).fetch(slug: full_slug(slug), text: content || capture(&block))
       contenteditable = signed_in? ? 'content-editable' : ''
-      "<#{elem} #{contenteditable} data-copilot-slug='#{full_slug(slug)}' class='copilot-editable'>#{text}</#{elem}>".html_safe
+      elem = options[:element] || "div"
+      class_names = (options[:class_names] || []).join(' ')
+      "<#{elem} #{contenteditable} data-copilot-slug='#{full_slug(slug)}' class='copilot-editable #{class_names}'>#{text}</#{elem}>".html_safe
     end
 
     def copilot_edit_panel
@@ -19,7 +21,7 @@ module Copilot
               <span class="left">
                 #{app_name} | CMS
               </span>
-              <span>Logged in as Admin | #{link_to('Log Out', '/cms/log_out')}</span>
+              <span>#{link_to('Log Out', '/cms/log_out', class: 'log-out')}</span>
             </p>
           </header>
           <a href="#" class="toggle-control-panel" data-expanded="true">-</a>

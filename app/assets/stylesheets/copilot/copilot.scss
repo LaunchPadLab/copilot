@@ -1,0 +1,65 @@
+[content-editable] {
+  cursor: pointer;
+  border: 1px solid lightblue;
+}
+
+.control-panel {
+  background: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  height: 40px;
+
+  p {
+    color: white;
+    margin: 0px 0px 0px 40px;
+    text-align: right;
+    line-height: 35px;
+    padding: 0 5px;
+  }
+
+  a {
+    color: purple;
+    text-transform: none;
+  }
+}
+
+.left {
+  float: left;
+}
+
+a.toggle-control-panel {
+  background: #33C3F0;
+  color: white;
+  position: absolute;
+  left: 0;
+  z-index: 10000;
+  display: block;
+  top: 0;
+  padding: 10px;
+  text-decoration: none;
+  border-right: 1px solid #33C3F0;
+  border-bottom: 1px solid #33C3F0;
+  border-radius: 0 0 5px 0;
+  height: 19px;
+  font-size: 24px;
+  line-height: 20px;
+
+  &:hover {
+    color: white;
+    background-color: #1EAEDB;
+    border-color: #1EAEDB;
+  }
+}
+
+a.log-out {
+  color: #1EAEDB;
+}
+
+form.sign-in {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #D1D1D1;
+}
