@@ -8,18 +8,9 @@ module Copilot
 
       def install
         run 'bundle install'
-        route "mount Copilot::Engine => '/copilot'"
+        route "mount Copilot::Engine => '/cms'"
         rake 'copilot:install:migrations'
         rake 'db:migrate'
-      end
-
-      def add_routes
-        append_to_file 'config/routes.rb' do <<-'RUBY'
-Rails.application.routes.draw do
-  Copilot::Router.route
-end
-        RUBY
-        end
       end
     end
   end

@@ -1,5 +1,7 @@
 $(function() {
 
+  var $controlPanel = $('.control-panel');
+
   $('[content-editable]').raptor({
     plugins:{
       alignCenter: false,
@@ -11,9 +13,12 @@ $(function() {
       clearFormatting: false,
       clickButtonToEdit: false,
       colorMenuBasic: false,
-      dockToElement: false,
-      dockToScreen: false,
-      // embed
+      dock: {
+        dockToElement: true,
+        docked: true
+        // dockToScreen: false,
+      },
+      embed: false,
       floatLeft: false,
       floatNone: false,
       floatRight: false,
@@ -22,27 +27,27 @@ $(function() {
       // historyRedo
       // historyUndo
       hrCreate: false,
-      // insertFile
+      insertFile: false,
       languageMenu: false,
-      // linkCreate
-      // linkRemove
-      // listOrdered
-      // listUnordered
+      linkCreate: false,
+      linkRemove: false,
+      listOrdered: false,
+      listUnordered: false,
       logo: false,
       save: {
         plugin: 'saveRest'
       },
       saveRest: {
-        url: '/copilot/content',
+        url: '/cms/content',
         data: function(html) {
           return {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+            'authenticity_token': $('meta[name="csrf-token"]').attr('content'),
             slug: this.raptor.getElement().data('copilotSlug'),
             value: html
           };
         }
       },
-      // snippetMenu
+      snippetMenu: false,
       specialCharacters: false,
       statistics: false,
       tableCreate: false,
@@ -62,10 +67,7 @@ $(function() {
       textSub: false,
       textSuper: false,
       textUnderline: false,
-      // viewSource
-      dock:{
-        dockToElement: true
-      }
+      viewSource: false
     }
   });
 
@@ -73,6 +75,19 @@ $(function() {
     $(el).on('click', function(){
       Raptor.getInstances()[i].enableEditing();
     });
+  });
+
+  $('.toggle-control-panel').on('click', function(e){
+    e.preventDefault();
+    var expanded = $(this).data('expanded');
+    if (expanded){
+      $(this).text('+');
+      $controlPanel.hide();
+    } else {
+      $(this).text('-');
+      $controlPanel.show();
+    }
+    $(this).data('expanded', !expanded);
   });
 
 });

@@ -5,22 +5,12 @@ module Copilot
       Copilot.configuration.app_name
     end
 
-    def copilot_text(slug, content=nil, elem='div', &block)
-      text = Content.fetch(full_slug(slug), content || capture(&block))
+    def copilot_text(slug, options = {}, content = nil, &block)
+      text = PageContent.new(contents: @contents).fetch(slug: full_slug(slug), text: content || capture(&block))
       contenteditable = signed_in? ? 'content-editable' : ''
-      "<#{elem} #{contenteditable} data-copilot-slug='#{full_slug(slug)}' data-copilot-value='#{text}' class='copilot-editable'>#{text}</#{elem}>".html_safe
-    end
-
-    def copilot_edit_path
-     "editable#{request.path}"
-    end
-
-    def link_to_copilot(edit_name='Edit', back_name='Back', html_options={})
-      if signed_in?
-        link_to back_name, :back, html_options.merge(class: 'copilot-back-link')
-      else
-        link_to edit_name, copilot_edit_path, html_options.merge(class: 'copilot-edit-link')
-      end
+      elem = options[:element] || "div"
+      class_names = (options[:class_names] || []).join(' ')
+      "<#{elem} #{contenteditable} data-copilot-slug='#{full_slug(slug)}' class='copilot-editable #{class_names}'>#{text}</#{elem}>".html_safe
     end
 
     def copilot_edit_panel
@@ -28,10 +18,13 @@ module Copilot
         %Q(
           <header class="control-panel">
             <p>
-              <span class="left">#{app_name} | CMS</span>
-              <span>Logged in as Admin | #{link_to('Log Out', '/cms/log_out')}</span>
+              <span class="left">
+                #{app_name} | CMS
+              </span>
+              <span>#{link_to('Log Out', '/cms/log_out', class: 'log-out')}</span>
             </p>
           </header>
+          <a href="#" class="toggle-control-panel" data-expanded="true">-</a>
         ).html_safe
       end
     end
