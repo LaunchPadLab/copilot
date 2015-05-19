@@ -46,6 +46,4 @@ if defined?(ActiveAdmin)
     end
 
   end
-else
-  p 'BALLS'
 end
