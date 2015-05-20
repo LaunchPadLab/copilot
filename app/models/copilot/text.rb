@@ -1,6 +1,6 @@
 module Copilot
   class Text < Copilot::Content
-    def render(options)
+    def render(options={})
       elem            = options[:element] || "div"
       class_names     = (options[:class_names] || []).join(' ')
       contenteditable = options[:contenteditable]

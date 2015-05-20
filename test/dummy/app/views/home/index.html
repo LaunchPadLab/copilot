@@ -31,10 +31,6 @@
   </div>
 <% end %>
 
-<%= copilot_list 'paragraph_2_link_with_stuff', element: 'ul' do |list| %>
-  <%= copilot_text_item list, 'And ye, another', element: 'p' %>
-  <%= copilot_text_item list, element: 'p' do %>
-    Holy Moly
-  <% end %>
-  <%= copilot_link_item list, 'http://www.google.com', 'Behold a link' %>
-<% end %>
+<%= copilot_list 'paragraph_2_list', element: 'ul', child_element: 'li' %>
+
+
