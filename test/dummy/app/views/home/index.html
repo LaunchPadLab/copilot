@@ -24,3 +24,9 @@
 <%= copilot_text 'paragraph_2_header', 'And ye, another', { element: 'h3' } %>
 
 <%= copilot_link 'paragraph_2_link', 'http://www.google.com', 'Behold a link' %>
+
+<%= copilot_link 'paragraph_2_link_with_stuff', 'http://www.google.com' do %>
+  <div>
+    <p>A link with some stuff inside!</p>
+  </div>
+<% end %>

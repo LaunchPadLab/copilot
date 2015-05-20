@@ -7,19 +7,12 @@ module Copilot
 
     def copilot_text(slug, content = nil, **options, &block)
       text = Content.new_text(slug: full_slug(slug), value: content || capture(&block))
-      content = PageContent.fetch_or_create(text)
-      contenteditable = signed_in? ? 'content-editable' : ''
-      elem = options[:element] || "div"
-      class_names = (options[:class_names] || []).join(' ')
-      content.render(elem, contenteditable, class_names)
+      copilot_content(text, options)
     end
 
     def copilot_link(slug, url, content = nil, **options, &block)
       link = Content.new_link(slug: full_slug(slug), value: content || capture(&block), url: url)
-      content = PageContent.fetch_or_create(link)
-      contenteditable = signed_in? ? 'content-editable' : ''
-      class_names = (options[:class_names] || []).join(' ')
-      content.render(contenteditable, class_names)
+      copilot_content(link, options)
     end
 
     def copilot_edit_panel
@@ -39,6 +32,13 @@ module Copilot
     end
 
     private
+
+      def copilot_content(default_content, options)
+        content = PageContent.fetch_or_create(default_content)
+        options!.merge({contenteditable: signed_in? ? 'content-editable' : ''})
+        content.render(options)
+      end
+
       def signed_in?
         session[:user_id].present?
       end

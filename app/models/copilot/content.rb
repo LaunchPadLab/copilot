@@ -12,5 +12,10 @@ module Copilot
     def self.new_link(**kwargs)
       Link.new(slug: kwargs[:slug], value: {url: kwargs[:url], content: kwargs[:value]})
     end
+
+    def self.new
+      method_name = "new_#{Copilot::Link.name.split('::')[1].downcase}"
+      raise "Instantiating with the 'new' method is not allowed, use 'Content.#{method_name}' instead."
+    end
   end
 end
