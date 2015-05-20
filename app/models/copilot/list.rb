@@ -10,12 +10,13 @@ module Copilot
 
     def render(options={})
       elem            = options[:element] || "ul"
+      list_elem       = options[:list_element] || "li"
       class_names     = (options[:class_names] || []).join(' ')
       child_options = {
-        element:     options[:child_element] || "li",
+        element:     options[:child_element],
         class_names: options[:child_class_names]
       }
-      "<#{elem} data-copilot-slug='#{slug}' class='#{class_names}'>#{render_contents(child_options)}</#{elem}>".html_safe
+      "<#{elem} data-copilot-slug='#{slug}' class='#{class_names}'>#{render_contents(list_elem, child_options)}</#{elem}>".html_safe
     end
 
     def add_content(content)
@@ -38,10 +39,10 @@ module Copilot
         (contents.map { |content| content.slug.split('-')[-1].to_i }.max || 0) + 1
       end
 
-      def render_contents(options={})
+      def render_contents(list_elem, options={})
         contents
           .select { |content| value[content.slug][:visible] }
-          .map { |content| content.render(options) }.join
+          .map { |content| "<#{list_elem}>#{content.render(options)}</#{list_elem}>" }.join
       end
 
       def save_contents
