@@ -5,12 +5,21 @@ module Copilot
       Copilot.configuration.app_name
     end
 
-    def copilot_text(slug, options = {}, content = nil, &block)
-      text = PageContent.new(contents: @contents).fetch(slug: full_slug(slug), text: content || capture(&block))
+    def copilot_text(slug, content = nil, **options, &block)
+      text = Content.new_text(slug: full_slug(slug), value: content || capture(&block))
+      content = PageContent.fetch_or_create(text)
       contenteditable = signed_in? ? 'content-editable' : ''
       elem = options[:element] || "div"
       class_names = (options[:class_names] || []).join(' ')
-      "<#{elem} #{contenteditable} data-copilot-slug='#{full_slug(slug)}' class='copilot-editable #{class_names}'>#{text}</#{elem}>".html_safe
+      content.render(elem, contenteditable, class_names)
+    end
+
+    def copilot_link(slug, url, content = nil, **options, &block)
+      link = Content.new_link(slug: full_slug(slug), value: content || capture(&block), url: url)
+      content = PageContent.fetch_or_create(link)
+      contenteditable = signed_in? ? 'content-editable' : ''
+      class_names = (options[:class_names] || []).join(' ')
+      content.render(contenteditable, class_names)
     end
 
     def copilot_edit_panel

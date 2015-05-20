@@ -1,19 +1,24 @@
 module Copilot
   class PageContent
 
-    attr_accessor :contents
+    @contents = {}
+    def self.fetch_or_create(default_content)
+      slug = default_content.slug
 
-    def initialize(params)
-      @contents = params[:contents] || []
-    end
+      if slug.starts_with? "."
+        namespace = slug
+      else
+        namespace_parts = slug.split('.')[0..1]
+        namespace = namespace_parts.join('.')
+        @contents[namespace] ||= Content.for_page(*namespace_parts).map { |content| [content.slug, content] }.to_h
+      end
 
-    def fetch(params)
-      slug = params[:slug]
-      value = params[:text]
-      selected_content = contents.select { |c| c.slug == slug }
-      content = selected_content.any? ? selected_content.first : Content.find_or_create_by(slug: slug)
-      content.update(value: value) unless content.value.present?
-      content.value
+      unless @contents[namespace][slug]
+        default_content.save!
+        @contents[namespace][slug] = default_content
+      end
+
+      @contents[namespace][slug]
     end
 
   end

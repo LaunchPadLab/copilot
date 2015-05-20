@@ -3,13 +3,12 @@
 <ol>
   <li>Home</li>
   <li><%= link_to 'About', about_path %></li>
-  <li><%#= link_to 'Stuff', stuff_path %></li>
 </ol>
 
 <h1>Hello, and welcome to the Copilot dummy app!</h1>
 <h2>Here we will demonstrate Copilot in all its glory</h2>
 
-<%= copilot_text 'paragraph_1_header', { element: 'h3' }, 'Behold a paragraph' %>
+<%= copilot_text 'paragraph_1_header', 'Behold a paragraph', { element: 'h3' } %>
 
 <%= copilot_text 'paragraph_1_text', { element: 'p' } do %>
   The path of a cosmonaut is not an easy, triumphant march to glory. You have to get to know the meaning not just of joy but also of grief, before being allowed in the spacecraft cabin.
@@ -22,4 +21,6 @@
 
   Curious that we spend more time congratulating people who have succeeded than encouraging people who have not.
 <% end %>
-<%= copilot_text 'paragraph_2_header', { element: 'h3' }, 'And ye, another' %>
+<%= copilot_text 'paragraph_2_header', 'And ye, another', { element: 'h3' } %>
+
+<%= copilot_link 'paragraph_2_link', 'http://www.google.com', 'Behold a link' %>
