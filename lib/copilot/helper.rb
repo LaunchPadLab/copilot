@@ -5,12 +5,19 @@ module Copilot
       Copilot.configuration.app_name
     end
 
-    def copilot_text(slug, options = {}, content = nil, &block)
-      text = PageContent.new(contents: @contents).fetch(slug: full_slug(slug), text: content || capture(&block))
-      contenteditable = signed_in? ? 'content-editable' : ''
-      elem = options[:element] || "div"
-      class_names = (options[:class_names] || []).join(' ')
-      "<#{elem} #{contenteditable} data-copilot-slug='#{full_slug(slug)}' class='copilot-editable #{class_names}'>#{text}</#{elem}>".html_safe
+    def copilot_text(slug, content = nil, **options, &block)
+      text = Content.new_text(slug: full_slug(slug), value: content || capture(&block))
+      copilot_content(text, options)
+    end
+
+    def copilot_link(slug, url, content = nil, **options, &block)
+      link = Content.new_link(slug: full_slug(slug), value: content || capture(&block), url: url)
+      copilot_content(link, options)
+    end
+
+    def copilot_list(slug, **options)
+      list = Content.new_list(slug: full_slug(slug))
+      copilot_content(list, options)
     end
 
     def copilot_edit_panel
@@ -30,12 +37,18 @@ module Copilot
     end
 
     private
+
+      def copilot_content(default_content, options={})
+        content = PageContent.fetch_or_create(default_content)
+        options.merge!({contenteditable: signed_in? ? 'content-editable' : ''})
+        content.render(options)
+      end
+
       def signed_in?
         session[:user_id].present?
       end
 
       def full_slug(slug)
-        p request.path.to_s
         unless slug.starts_with? "."
           "#{params[:controller]}.#{params[:action]}.#{slug}"
         else

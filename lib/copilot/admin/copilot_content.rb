@@ -1,6 +1,12 @@
 if defined?(ActiveAdmin)
 
-  ActiveAdmin.register Copilot::Content, as: "Content" do
+  ActiveAdmin.setup do |config|
+    config.namespace :copilot_admin do |copilot_admin|
+      copilot_admin.site_title = "Copilot Admin"
+    end
+  end
+
+  ActiveAdmin.register Copilot::Content, namespace: :copilot_admin, as: "Content" do
 
     menu false
 
@@ -15,6 +21,9 @@ if defined?(ActiveAdmin)
       end
       column "Content Name" do |content|
         content.slug.split(".").last.humanize
+      end
+      column "Content Type" do |content|
+        content.type.split('::')[1]
       end
       column "Content Value", :value
       actions

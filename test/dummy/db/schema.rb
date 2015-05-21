@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150501221436) do
+ActiveRecord::Schema.define(version: 20150520035917) do
 
   create_table "copilot_contents", force: :cascade do |t|
     t.string   "slug"
     t.text     "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "type"
   end
 
   create_table "copilot_users", force: :cascade do |t|
