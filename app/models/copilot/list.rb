@@ -29,20 +29,20 @@ module Copilot
       value[content.slug] = { visible: false }
     end
 
-    private
+    def new_slug
+      "-#{slug}-#{new_slug_index}"
+    end
 
-      def new_slug
-        "-#{slug}-#{new_slug_index}"
-      end
+    private
 
       def new_slug_index
         (contents.map { |content| content.slug.split('-')[-1].to_i }.max || 0) + 1
       end
 
       def render_contents(list_elem, options={})
-        contents
-          .select { |content| value[content.slug][:visible] }
-          .map { |content| "<#{list_elem}>#{content.render(options)}</#{list_elem}>" }.join
+        contents.map { |content| "<#{list_elem}>#{content.render(options)}</#{list_elem}>" }.join
+          # .select { |content| value[content.slug][:visible] }
+
       end
 
       def save_contents

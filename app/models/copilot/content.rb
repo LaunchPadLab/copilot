@@ -17,5 +17,17 @@ module Copilot
       List.new(slug: kwargs[:slug].strip)
     end
 
+    def list?
+      type === "Copilot::List"
+    end
+
+    def text?
+      type === "Copilot::Text"
+    end
+
+    def link?
+      type === "Copilot::Link"
+    end
+
   end
 end
