@@ -16,7 +16,7 @@ module Copilot
         element:     options[:child_element],
         class_names: options[:child_class_names]
       }
-      "<#{elem} data-copilot-slug='#{slug}' class='#{class_names}'>#{render_contents(list_elem, child_options)}</#{elem}>".html_safe
+      "<#{elem} data-copilot-slug='#{slug}' data-copilot-id='#{id}' class='#{class_names}'>#{render_contents(list_elem, child_options)}</#{elem}>".html_safe
     end
 
     def add_content(content)
@@ -51,7 +51,7 @@ module Copilot
 
       # A hack to make sure the object saves for now
       def init
-        self.value ||= {default: nil}
+        self.value = { default: "Hello" }
       end
   end
 end
