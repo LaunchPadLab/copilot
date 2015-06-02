@@ -41,7 +41,11 @@ module Copilot
       def copilot_content(default_content, options={})
         content = PageContent.fetch_or_create(default_content)
         options.merge!({contenteditable: signed_in? ? 'content-editable' : ''})
-        content.render(options)
+        html = content.render(options)
+        if content.list?
+          html += "<br/><p><a href='/admin/contents/#{content.id}'>Add new list item</a></p>" if current_user
+        end
+        html.html_safe
       end
 
       def signed_in?

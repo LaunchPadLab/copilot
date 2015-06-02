@@ -4,6 +4,8 @@ module Copilot
     after_initialize :init
     before_save :save_contents
 
+    attr_accessor :signed_in
+
     def contents
       @contents ||= Content.where("slug LIKE ?", "-#{slug}-%").to_a
     end
@@ -16,7 +18,8 @@ module Copilot
         element:     options[:child_element],
         class_names: options[:child_class_names]
       }
-      "<#{elem} data-copilot-slug='#{slug}' data-copilot-id='#{id}' class='#{class_names}'>#{render_contents(list_elem, child_options)}</#{elem}>".html_safe
+      @signed_in = options[:signed_in]
+      "<#{elem} data-copilot-slug='#{slug}' data-copilot-id='#{id}' class='#{class_names}'>#{render_contents(list_elem, child_options)}</#{elem}>"
     end
 
     def add_content(content)
