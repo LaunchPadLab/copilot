@@ -2,6 +2,8 @@ module Copilot
   class File < Copilot::Content
     serialize :value, Hash
 
+    has_attached_file :attachment
+
     def url
       value[:url]
     end
