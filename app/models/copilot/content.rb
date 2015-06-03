@@ -29,5 +29,9 @@ module Copilot
       type === "Copilot::Link"
     end
 
+    def file?
+      type === "Copilot::File"
+    end
+
   end
 end
