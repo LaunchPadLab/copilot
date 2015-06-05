@@ -24,7 +24,14 @@ module Copilot
         (json["listItems"] || []).each do |parent_item, items|
           items.each do |item|
             slug = Copilot::List.where("slug LIKE ?", "%offer_scrap_types_list%").first.new_slug
-            puts Copilot::Content.new(type: "Copilot::#{item['type']}", value: item["value"], slug: slug).inspect
+            if item["attachment"]
+              file = ::File.new(item["attachment"])
+              content = Copilot::Content.new(type: "Copilot::#{item['type']}", value: item["value"], slug: slug)
+              content.attachment = file
+              # content.save
+            else
+              puts Copilot::Content.new(type: "Copilot::#{item['type']}", value: item["value"], slug: slug).inspect
+            end
           end
         end
       else

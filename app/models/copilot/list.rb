@@ -7,7 +7,7 @@ module Copilot
     attr_accessor :signed_in
 
     def contents
-      @contents ||= Content.where("slug LIKE ?", "-#{slug}-%").to_a
+      @contents ||= Content.where("slug LIKE ?", "-#{slug}-%").order("(substring(slug, '[0-9]+'))::int ASC").to_a
     end
 
     def render(options={})
