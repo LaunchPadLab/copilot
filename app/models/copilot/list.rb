@@ -15,7 +15,7 @@ module Copilot
       list_elem       = options[:list_element] || "li"
       class_names     = (options[:class_names] || []).join(' ')
       child_options = {
-        class_names: options[:child_class_names]
+        class_names: options[:child_class_names],
         attributes: options[:child_element_attributes]
       }
       @signed_in = options[:signed_in]
