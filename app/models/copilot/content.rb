@@ -30,7 +30,8 @@ module Copilot
               content.attachment = file
               content.save
             else
-              puts Copilot::Content.new(type: "Copilot::#{item['type']}", value: item["value"], slug: slug).inspect
+              content = Copilot::Content.new(type: "Copilot::#{item['type']}", value: item["value"], slug: slug)
+              content.save
             end
           end
         end
