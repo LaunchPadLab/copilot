@@ -6,7 +6,12 @@ module Copilot
     validates :slug, presence: true, uniqueness: true
     validates :value, presence: true
 
-    scope :for_page, -> (controller, action) { where("slug LIKE ?", "#{controller}.#{action}%") }
+    if defined?(PaperTrail)
+      scope :for_page, -> (controller, action) { where("slug LIKE ?", "#{controller}.#{action}%").includes(:versions) }
+    else
+      scope :for_page, -> (controller, action) { where("slug LIKE ?", "#{controller}.#{action}%") }
+    end
+
     scope :drafts, -> { where(draft: true) }
 
     def self.new_text(**kwargs)
