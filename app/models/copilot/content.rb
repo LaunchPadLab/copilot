@@ -1,5 +1,8 @@
 module Copilot
   class Content < ActiveRecord::Base
+
+    has_paper_trail if defined?(PaperTrail)
+
     validates :slug, presence: true, uniqueness: true
     validates :value, presence: true
 
