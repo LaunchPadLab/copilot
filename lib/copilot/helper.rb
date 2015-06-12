@@ -39,7 +39,7 @@ module Copilot
     private
 
       def copilot_content(default_content, options={})
-        content = PageContent.fetch_or_create(default_content)
+        content = PageContent.fetch_or_create(default_content, @preview)
         options.merge!({contenteditable: signed_in? ? 'content-editable' : ''})
         html = content.render(options)
         if content.list?

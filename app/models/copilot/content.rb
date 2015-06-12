@@ -7,6 +7,7 @@ module Copilot
     validates :value, presence: true
 
     scope :for_page, -> (controller, action) { where("slug LIKE ?", "#{controller}.#{action}%") }
+    scope :drafts, -> { where(draft: true) }
 
     def self.new_text(**kwargs)
       Text.new(slug: kwargs[:slug].strip, value: kwargs[:value])
@@ -40,6 +41,18 @@ module Copilot
         end
       else
         puts "No JSON seed file found for your CMS content."
+      end
+    end
+
+    def published_version(preview)
+      if preview
+        self
+      else
+        if defined?(PaperTrail)
+          self.draft ? self.previous_version : self
+        else
+          self
+        end
       end
     end
 
