@@ -15,8 +15,8 @@ module Copilot
       list_elem       = options[:list_element] || "li"
       class_names     = (options[:class_names] || []).join(' ')
       child_options = {
-        element:     options[:child_element],
-        class_names: options[:child_class_names]
+        class_names: options[:child_class_names],
+        attributes: options[:child_element_attributes]
       }
       @signed_in = options[:signed_in]
       "<#{elem} data-copilot-slug='#{slug}' data-copilot-id='#{id}' class='#{class_names}'>#{render_contents(list_elem, child_options)}</#{elem}>"
@@ -43,9 +43,9 @@ module Copilot
       end
 
       def render_contents(list_elem, options={})
-        contents.map { |content| "<#{list_elem}>#{content.render(options)}</#{list_elem}>" }.join
-          # .select { |content| value[content.slug][:visible] }
-
+        class_names = (options[:class_names] || []).join(' ')
+        attributes = (options[:attributes] || []).join(' ')
+        contents.map { |content| "<#{list_elem} class='#{class_names}' #{attributes}>#{content.render(options)}</#{list_elem}>" }.join
       end
 
       def save_contents
